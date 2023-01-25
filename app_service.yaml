@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud_cip_svc
+  namespace: poc-6666
+spec:
+  ports:
+  - port: 5000
+    name: crud-service
+    protocal: TCP
+    targetPort: 5000
+  selector:
+    app: flaskapi

@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskapi-deployment
+  namespace: poc-6666
+  labels:
+    app: flaskapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flaskapi
+  template:
+    metadata:
+      namespace: poc-6666
+      labels:
+        app: flaskapi
+        service: crud-service
+    spec:
+      containers:
+        - name: flaskapi
+          image: crud_poc:11.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          env:
+            - name: db_root_password
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: db_root_password
+            - name: db_name
+              value: Customer
+
+
+---
